@@ -136,8 +136,8 @@ impl Currency {
             Currency::IDR => "indonesian rupiah{}",
             Currency::ILS => "new shekel{}",
             Currency::INR => "rupee{}",
-            Currency::JPY => "yen{}",
-            Currency::KRW => "won{}",
+            Currency::JPY => "yen",
+            Currency::KRW => "won",
             Currency::KWD => "kuwaiti dinar{}",
             Currency::KZT => "tenge{}",
             Currency::MXN => "mexican peso{}",
@@ -152,7 +152,7 @@ impl Currency {
                 }
             }
             Currency::PESO => "peso{}",
-            Currency::PHP => "philippine peso{}",
+            Currency::PHP => "peso{}",
             Currency::PLN => "zloty{}",
             Currency::QAR => "qatari riyal{}",
             Currency::RIYAL => "riyal{}",
@@ -174,6 +174,24 @@ impl Currency {
     /// Returns a default string representation for the cents of the currency
     pub fn default_subunit_string(&self, cent: &str, plural_form: bool) -> String {
         match self {
+            Currency::DOLLAR | Currency::EUR => "cent{}",
+            Currency::GBP => {
+                if plural_form {
+                    "pence"
+                } else {
+                    "penny"
+                }
+            }
+            Currency::INR => {
+                if plural_form {
+                    "paise"
+                } else {
+                    "paisa"
+                }
+            }
+            Currency::JPY => "sen",
+            Currency::PHP => "centavo{}",
+            Currency::CHF => "centime{}",
             Currency::AED | Currency::KWD => "fils",
             Currency::ARS | Currency::BRL | Currency::CLP | Currency::COP | Currency::MXN => {
                 "centavo{}"
