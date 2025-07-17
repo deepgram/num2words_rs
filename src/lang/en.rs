@@ -325,9 +325,7 @@ impl Language for English {
             } else if integral_part.is_zero() {
                 Ok(format!("{cents_words} {cents_suffix}"))
             } else {
-                Ok(format!(
-                    "{integral_word} and {cents_words} {cents_suffix}"
-                ))
+                Ok(format!("{integral_word} and {cents_words} {cents_suffix}"))
             }
         }
     }

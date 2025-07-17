@@ -312,10 +312,7 @@ impl Language for French {
                 words.push(String::from(w));
             } else {
                 // last word, needs to be processed
-                words.push(format!(
-                    "{}ième",
-                    w.strip_suffix('e').unwrap_or(w)
-                ));
+                words.push(format!("{}ième", w.strip_suffix('e').unwrap_or(w)));
             }
         }
 
@@ -368,9 +365,7 @@ impl Language for French {
             } else if integral_part.is_zero() {
                 Ok(format!("{cents_words} {cents_suffix}"))
             } else {
-                Ok(format!(
-                    "{integral_word} et {cents_words} {cents_suffix}"
-                ))
+                Ok(format!("{integral_word} et {cents_words} {cents_suffix}"))
             }
         }
     }

@@ -123,32 +123,44 @@ pub fn to_language(lang: Lang, preferences: Vec<String>) -> Box<dyn Language> {
             let feminine = preferences
                 .iter()
                 .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
-            let reformed = preferences
-                .iter()
-                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
+            let reformed = preferences.iter().any(|v: &String| {
+                ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str())
+            });
 
-            Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::FR))
+            Box::new(lang::French::new(
+                feminine,
+                reformed,
+                lang::fr::RegionFrench::FR,
+            ))
         }
         Lang::French_BE => {
             let feminine = preferences
                 .iter()
                 .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
-            let reformed = preferences
-                .iter()
-                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
+            let reformed = preferences.iter().any(|v: &String| {
+                ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str())
+            });
 
-            Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::BE))
+            Box::new(lang::French::new(
+                feminine,
+                reformed,
+                lang::fr::RegionFrench::BE,
+            ))
         }
         Lang::French_CH => {
             let feminine = preferences
                 .iter()
                 .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
-            let reformed = preferences
-                .iter()
-                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
+            let reformed = preferences.iter().any(|v: &String| {
+                ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str())
+            });
 
-            Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::CH))
-            }
+            Box::new(lang::French::new(
+                feminine,
+                reformed,
+                lang::fr::RegionFrench::CH,
+            ))
+        }
         Lang::Spanish => {
             use es::{DecimalChar, NegativeFlavour};
             let neg_flavour = preferences
