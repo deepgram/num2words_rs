@@ -15,11 +15,11 @@ pub enum RegionFrench {
     CH,
 }
 
-const UNITS: [&'static str; 9] = [
+const UNITS: [&str; 9] = [
     "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf",
 ];
 
-const TENS: [&'static str; 9] = [
+const TENS: [&str; 9] = [
     "dix",
     "vingt",
     "trente",
@@ -31,12 +31,12 @@ const TENS: [&'static str; 9] = [
     "quatre-vingt-dix",
 ];
 
-const TEENS: [&'static str; 10] = [
+const TEENS: [&str; 10] = [
     "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit",
     "dix-neuf",
 ];
 
-const MEGAS: [&'static str; 33] = [
+const MEGAS: [&str; 33] = [
     "mille",
     "million",
     "milliard",
@@ -314,11 +314,7 @@ impl Language for French {
                 // last word, needs to be processed
                 words.push(format!(
                     "{}ième",
-                    if w.ends_with('e') {
-                        &w[..w.len() - 1]
-                    } else {
-                        &w
-                    }
+                    w.strip_suffix('e').unwrap_or(w)
                 ));
             }
         }
@@ -370,11 +366,10 @@ impl Language for French {
             if cents_nb.is_zero() {
                 Ok(integral_word)
             } else if integral_part.is_zero() {
-                Ok(format!("{} {}", cents_words, cents_suffix))
+                Ok(format!("{cents_words} {cents_suffix}"))
             } else {
                 Ok(format!(
-                    "{} et {} {}",
-                    integral_word, cents_words, cents_suffix
+                    "{integral_word} et {cents_words} {cents_suffix}"
                 ))
             }
         }
@@ -671,7 +666,7 @@ mod tests {
             num *= BigFloat::from(1000);
             assert_eq!(
                 Num2Words::new(num).lang(Lang::French).cardinal().to_words(),
-                Ok(String::from(format!("{}{}", un, m)))
+                Ok(format!("{un}{m}"))
             );
             un = "un ";
         }

@@ -1,3 +1,13 @@
+mod en;
+mod es;
+mod fr;
+mod uk;
+
+pub use en::English;
+pub use es::Spanish;
+pub use fr::French;
+pub use uk::Ukrainian;
+
 use crate::lang;
 use crate::num2words::Num2Err;
 use crate::Currency;
@@ -112,41 +122,35 @@ pub fn to_language(lang: Lang, preferences: Vec<String>) -> Box<dyn Language> {
         Lang::French => {
             let feminine = preferences
                 .iter()
-                .find(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()))
-                .is_some();
+                .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
             let reformed = preferences
                 .iter()
-                .find(|v: &&String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()))
-                .is_some();
+                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
 
             Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::FR))
         }
         Lang::French_BE => {
             let feminine = preferences
                 .iter()
-                .find(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()))
-                .is_some();
+                .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
             let reformed = preferences
                 .iter()
-                .find(|v: &&String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()))
-                .is_some();
+                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
 
             Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::BE))
         }
         Lang::French_CH => {
             let feminine = preferences
                 .iter()
-                .find(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()))
-                .is_some();
+                .any(|v| ["feminine", "feminin", "féminin", "f"].contains(&v.as_str()));
             let reformed = preferences
                 .iter()
-                .find(|v: &&String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()))
-                .is_some();
+                .any(|v: &String| ["reformed", "1990", "rectifié", "rectification"].contains(&v.as_str()));
 
             Box::new(lang::French::new(feminine, reformed, lang::fr::RegionFrench::CH))
             }
         Lang::Spanish => {
-            use super::es::{DecimalChar, NegativeFlavour};
+            use es::{DecimalChar, NegativeFlavour};
             let neg_flavour = preferences
                 .iter()
                 .find_map(|v| NegativeFlavour::from_str(v).ok())

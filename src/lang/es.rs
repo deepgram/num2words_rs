@@ -828,7 +828,7 @@ impl Language for Spanish {
         // Years in spanish are read the same as cardinal numbers....(?)
         // src:https://twitter.com/RAEinforma/status/1761725275736334625?lang=en
         let year_word = self.int_to_cardinal(num)?;
-        Ok(format!("{}{}", year_word, suffix))
+        Ok(format!("{year_word}{suffix}"))
     }
 
     /// A Cardinal number which then the currency word representation is appended at the end.
@@ -870,12 +870,12 @@ impl Language for Spanish {
             let currency = self.currencies(currency, true);
             let inf = self.inf_to_cardinal(&num)? + "de {}";
             let word = inf.replace("{}", &currency);
-            return Ok(word);
+            Ok(word)
         } else if num.frac().is_zero() {
             let is_plural = num.int() != 1.into();
             let currency = self.currencies(currency, is_plural);
             let cardinal = strip_uno_into_un(self.int_to_cardinal(num)?);
-            return Ok(format!("{cardinal} {currency}"));
+            Ok(format!("{cardinal} {currency}"))
         } else {
             let hundred: BigFloat = 100.into();
             let (integral, cents) = (num.int(), num.mul(&hundred).int().rem(&hundred));
@@ -887,11 +887,11 @@ impl Language for Spanish {
             let cents_suffix = self.cents(currency, cents_is_plural);
 
             if cents.is_zero() {
-                return Ok(int_words);
+                Ok(int_words)
             } else if integral.is_zero() {
-                return Ok(format!("{cent_words} {cents_suffix}"));
+                Ok(format!("{cent_words} {cents_suffix}"))
             } else {
-                return Ok(format!("{} con {} {cents_suffix}", int_words, cent_words));
+                Ok(format!("{int_words} con {cent_words} {cents_suffix}"))
             }
         }
     }

@@ -209,7 +209,7 @@ impl Language for English {
                     let mut w_split = w.split('-');
 
                     if let Some(pre) = w_split.next() {
-                        prefix = format!("{}-", pre);
+                        prefix = format!("{pre}-");
                     }
 
                     if let Some(suf) = w_split.next() {
@@ -234,12 +234,12 @@ impl Language for English {
                         if suffix.ends_with('y') {
                             format!("{}ieth", &suffix[..suffix.len() - 1])
                         } else {
-                            format!("{}th", suffix)
+                            format!("{suffix}th")
                         }
                     }
                 };
 
-                words.push(format!("{}{}", prefix, suffix))
+                words.push(format!("{prefix}{suffix}"))
             }
         }
 
@@ -293,10 +293,10 @@ impl Language for English {
                 self.int_to_cardinal(BigFloat::from(low))?
             };
 
-            format!("{} {}", high_word, low_word)
+            format!("{high_word} {low_word}")
         };
 
-        Ok(format!("{}{}", year_word, suffix))
+        Ok(format!("{year_word}{suffix}"))
     }
 
     fn to_currency(&self, num: BigFloat, currency: Currency) -> Result<String, Num2Err> {
@@ -323,11 +323,10 @@ impl Language for English {
             if cents_nb.is_zero() {
                 Ok(integral_word)
             } else if integral_part.is_zero() {
-                Ok(format!("{} {}", cents_words, cents_suffix))
+                Ok(format!("{cents_words} {cents_suffix}"))
             } else {
                 Ok(format!(
-                    "{} and {} {}",
-                    integral_word, cents_words, cents_suffix
+                    "{integral_word} and {cents_words} {cents_suffix}"
                 ))
             }
         }
@@ -616,7 +615,7 @@ mod tests {
                     .lang(Lang::English)
                     .cardinal()
                     .to_words(),
-                Ok(format!("one {}", m))
+                Ok(format!("one {m}"))
             );
         }
 

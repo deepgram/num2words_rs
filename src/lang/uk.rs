@@ -501,7 +501,7 @@ impl Ukrainian {
                 } else {
                     ADJECTIVE_HARD_FLEXIONS_SINGULAR[Gender::Masculine.index()]
                 }[declension_idx];
-                format!("злот{}", flextion)
+                format!("злот{flextion}")
             }
             Currency::QAR | Currency::RIYAL | Currency::SAR => format!(
                 "ріал{}",

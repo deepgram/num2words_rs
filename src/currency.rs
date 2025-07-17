@@ -173,8 +173,7 @@ impl Currency {
 
     /// Returns a default string representation for the cents of the currency
     pub fn default_subunit_string(&self, cent: &str, plural_form: bool) -> String {
-        String::from(
-            match self {
+        match self {
                 Currency::AED | Currency::KWD => "fils",
                 Currency::ARS | Currency::BRL | Currency::CLP | Currency::COP | Currency::MXN => {
                     "centavo{}"
@@ -189,8 +188,7 @@ impl Currency {
                 Currency::VND => "xu{}",
                 _ => cent,
             }
-            .replace("{}", if plural_form { "s" } else { "" }),
-        )
+            .replace("{}", if plural_form { "s" } else { "" })
     }
 }
 

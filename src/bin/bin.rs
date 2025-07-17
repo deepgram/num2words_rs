@@ -118,8 +118,8 @@ fn handle_cmd(n: String, mut args: std::env::Args) {
         }
 
         match num.to_words() {
-            Ok(v) => println!("{}", v),
-            Err(err) => eprintln!("Error: {}", err),
+            Ok(v) => println!("{v}"),
+            Err(err) => eprintln!("Error: {err}"),
         }
     } else {
         eprintln!("Error: cannot parse number");

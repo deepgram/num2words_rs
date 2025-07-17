@@ -275,7 +275,7 @@ impl Num2Words {
     /// * Gender: **masculine/m/чоловічий/чол/ч**, feminine/f/жіночий/жін/ж, neuter/n/середній/сер/с
     ///
     /// * Declension: **nominative/nom/називний/н**, genitive/gen/родовий/р, dative/dat/давальний/д,\
-    /// accusative/acc/знахідний/з, instrumental/inc/орудний/о, locative/loc/місцевий/м
+    ///   accusative/acc/знахідний/з, instrumental/inc/орудний/о, locative/loc/місцевий/м
     ///
     /// Examples:
     /// ```
