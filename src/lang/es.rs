@@ -908,19 +908,17 @@ impl Language for Spanish {
     /// assert_eq!(words, "un dólar estadounidense");
     /// ```
     fn to_currency(&self, num: BigFloat, currency: crate::Currency) -> Result<String, Num2Err> {
-        let strip_uno_into_un_or_una = |string: String, cents_suffix: Option<&String>| -> String {
-            let has_feminine_cents_suffix = cents_suffix.is_some_and(|c| {
-                //                     ends with 'as'
-                c.ends_with('a') || c.chars().rev().nth(1) == Some('a')
-            });
+        let strip_uno_into_un_or_una = |string: String, currency_suffix: &str| -> String {
+            let has_feminine_currency_suffix =
+                currency_suffix.ends_with('a') || currency_suffix.chars().rev().nth(1) == Some('a');
             if let Some(prefix) = string.strip_suffix("iuno") {
-                if has_feminine_cents_suffix {
+                if has_feminine_currency_suffix {
                     format!("{prefix}iuna")
                 } else {
                     format!("{prefix}iún")
                 }
             } else if let Some(prefix) = string.strip_suffix("uno") {
-                if has_feminine_cents_suffix {
+                if has_feminine_currency_suffix {
                     format!("{prefix}una")
                 } else {
                     format!("{prefix}un")
@@ -939,7 +937,7 @@ impl Language for Spanish {
         } else if num.frac().is_zero() {
             let is_plural = num.int() != 1.into();
             let currency = self.currencies(currency, is_plural);
-            let cardinal = strip_uno_into_un_or_una(self.int_to_cardinal(num)?, None);
+            let cardinal = strip_uno_into_un_or_una(self.int_to_cardinal(num)?, &currency);
             Ok(format!("{cardinal} {currency}"))
         } else {
             let hundred: BigFloat = 100.into();
@@ -948,7 +946,7 @@ impl Language for Spanish {
             let cents_suffix = self.cents(currency, cents_is_plural);
             let (int_words, cent_words) = (
                 self.to_currency(integral, currency)?,
-                strip_uno_into_un_or_una(self.int_to_cardinal(cents)?, Some(&cents_suffix)),
+                strip_uno_into_un_or_una(self.int_to_cardinal(cents)?, &cents_suffix),
             );
 
             if cents.is_zero() {
