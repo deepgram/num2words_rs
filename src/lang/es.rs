@@ -302,7 +302,7 @@ impl Spanish {
                     "dólar canadiense"
                 }
             }
-            Currency::CHF => "franco{} suizo{}",
+            Currency::CHF => "franco{}",
             Currency::CLP => "peso{} chileno{}",
             Currency::CNY => {
                 if plural_form {
@@ -393,7 +393,7 @@ impl Spanish {
                 }
             }
             Currency::PESO => "peso{}",
-            Currency::PHP => "peso{} filipino{}",
+            Currency::PHP => "peso{}",
             Currency::PLN => "zloty{}",
             Currency::QAR => {
                 if plural_form {
