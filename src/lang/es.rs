@@ -10,6 +10,10 @@ use crate::{Currency, Num2Err};
 const UNIDADES: [&str; 10] = [
     "", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve",
 ];
+// Accented `unidades` when combined with `veinti-` to form numbers 21-29
+const UNIDADES_20S: [&str; 10] = [
+    "", "uno", "dós", "trés", "cuatro", "cinco", "séis", "siete", "ocho", "nueve",
+];
 // Decenas que son entre 11 y 19
 const DIECIS: [&str; 10] = [
     "diez", // Needed for cases like 10, 10_000 and 10_000_000
@@ -536,7 +540,7 @@ impl Spanish {
                         // case `021_...` => `? veintiún...`
                         1 if i != 0 => String::from("veintiún"),
                         // case `?_021` => `? veintiuno`
-                        _ => format!("veinti{unit_word}"),
+                        _ => format!("veinti{}", UNIDADES_20S[units]),
                     }),
                     _ => {
                         // case `?_142 => `? ciento cuarenta y dos`
