@@ -277,7 +277,7 @@ impl Spanish {
     }
 
     fn currencies(&self, currency: Currency, plural_form: bool) -> String {
-        let dollar: &str = match currency {
+        match currency {
             Currency::AED => "dirham{}",
             Currency::ARS => "peso{} argentino{}",
             Currency::AUD => {
@@ -294,6 +294,7 @@ impl Spanish {
                     "real brasileño"
                 }
             }
+            Currency::C => "cordoba{}",
             Currency::CAD => {
                 if plural_form {
                     "dólares canadienses"
@@ -340,7 +341,7 @@ impl Spanish {
                 }
             }
             Currency::EUR => "euro{}",
-            Currency::GBP => "libra{} esterlina{}",
+            Currency::GBP => "libra{}",
             Currency::HKD => {
                 if plural_form {
                     "dólares de Hong Kong"
@@ -447,14 +448,32 @@ impl Spanish {
                 }
             }
             Currency::UYU => "peso{} uruguayo{}",
+            Currency::VES => {
+                if plural_form {
+                    "bolivares"
+                } else {
+                    "bolivar"
+                }
+            }
             Currency::VND => "dong{}",
             Currency::ZAR => "rand{} sudafricano{}",
-        };
-        dollar.replace("{}", if plural_form { "s" } else { "" })
+            _ => return currency.default_string(plural_form),
+        }
+        .replace("{}", if plural_form { "s" } else { "" })
     }
 
     fn cents(&self, currency: Currency, plural_form: bool) -> String {
-        currency.default_subunit_string("centavo{}", plural_form)
+        match currency {
+            Currency::DOLLAR | Currency::PHP => "centavo{}",
+            Currency::GBP => "penique{}",
+            Currency::INR => "paisa{}",
+            Currency::JPY => "sen",
+            Currency::CHF | Currency::PEN | Currency::EUR => "céntimo{}",
+            Currency::UYU | Currency::B => "céntesimo{}",
+            Currency::CRC | Currency::VES => "céntimo{}",
+            _ => return currency.default_subunit_string("centavo{}", plural_form),
+        }
+        .replace("{}", if plural_form { "s" } else { "" })
     }
 
     fn int_to_cardinal(&self, num: BigFloat) -> Result<String, Num2Err> {

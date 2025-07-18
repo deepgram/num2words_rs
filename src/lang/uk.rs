@@ -528,6 +528,7 @@ impl Ukrainian {
                 "ранд{}",
                 NOUN_2ST_GROUP_HARD_DECLENSIONS[number_idx][declension_idx]
             ),
+            _ => unimplemented!("Currency not implemented for Ukranian: {currency:?}"),
         }
     }
 
@@ -647,6 +648,7 @@ impl Ukrainian {
                 "цент{}",
                 NOUN_2ST_GROUP_HARD_DECLENSIONS[number_idx][declension_idx]
             ),
+            _ => unimplemented!("Currency fraction not implemented for Ukranian: {currency:?}"),
         }
     }
 

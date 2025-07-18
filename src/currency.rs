@@ -5,7 +5,7 @@ use std::str::FromStr;
 /// Every three-letter variant is a valid ISO 4217 currency code. The only
 /// exceptions are `DINAR`, `DOLLAR`, `PESO` and `RIYAL`, which are generic
 /// terminology for the respective currencies.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 #[non_exhaustive]
 pub enum Currency {
     /// Dirham
@@ -14,8 +14,14 @@ pub enum Currency {
     ARS,
     /// Australian dollar
     AUD,
+    /// Panamanian balboa
+    B,
+    /// Boliviano
+    BOB,
     /// Brazilian real
     BRL,
+    /// Nicaraguan córdoba
+    C,
     /// Canadian dollar
     CAD,
     /// Swiss franc
@@ -70,6 +76,8 @@ pub enum Currency {
     PHP,
     /// Polish zloty
     PLN,
+    /// Guatamelan quetzal
+    Q,
     /// Qatari riyal
     QAR,
     /// Riyal
@@ -94,6 +102,8 @@ pub enum Currency {
     UYU,
     /// Vietnamese dong
     VND,
+    /// Venezuelan bolívar
+    VES,
     /// South African rand
     ZAR,
 }
@@ -108,6 +118,7 @@ impl Currency {
             Currency::AED => "dirham{}",
             Currency::ARS => "argentine peso{}",
             Currency::AUD => "australian dollar{}",
+            Currency::B => "balboa{}",
             Currency::BRL => {
                 if plural_form {
                     "reais"
@@ -115,6 +126,8 @@ impl Currency {
                     "real"
                 }
             }
+            Currency::BOB => "boliviano{}",
+            Currency::C => "cordoba{}",
             Currency::CAD => "canadian dollar{}",
             Currency::CHF => "franc{}",
             Currency::CLP => "chilean peso{}",
@@ -124,7 +137,7 @@ impl Currency {
                 if plural_form {
                     "colones"
                 } else {
-                    "colón"
+                    "colon"
                 }
             }
             Currency::DINAR => "dinar{}",
@@ -154,6 +167,7 @@ impl Currency {
             Currency::PESO => "peso{}",
             Currency::PHP => "peso{}",
             Currency::PLN => "zloty{}",
+            Currency::Q => "quetzal{}",
             Currency::QAR => "qatari riyal{}",
             Currency::RIYAL => "riyal{}",
             Currency::RUB => "ruble{}",
@@ -165,6 +179,13 @@ impl Currency {
             Currency::UAH => "hryvnia{}",
             Currency::USD => "US dollar{}",
             Currency::UYU => "uruguayan peso{}",
+            Currency::VES => {
+                if plural_form {
+                    "bolivares"
+                } else {
+                    "bolivar"
+                }
+            }
             Currency::VND => "dong{}",
             Currency::ZAR => "rand{}",
         }
@@ -191,18 +212,23 @@ impl Currency {
             }
             Currency::JPY => "sen",
             Currency::PHP => "centavo{}",
-            Currency::CHF => "centime{}",
+            Currency::CHF | Currency::PEN => "centime{}",
             Currency::AED | Currency::KWD => "fils",
-            Currency::ARS | Currency::BRL | Currency::CLP | Currency::COP | Currency::MXN => {
-                "centavo{}"
-            }
-            Currency::CRC => "céntimo{}",
+            Currency::ARS
+            | Currency::BRL
+            | Currency::CLP
+            | Currency::COP
+            | Currency::MXN
+            | Currency::BOB
+            | Currency::Q
+            | Currency::C => "centavo{}",
+            Currency::CRC | Currency::VES => "centimo{}",
             Currency::IDR | Currency::MYR => "sen{}",
             Currency::KRW => "jeon{}",
             Currency::SAR => "halalat{}",
             Currency::THB => "satang{}",
             Currency::UAH => "kopiyok{}",
-            Currency::UYU => "centesimo{}",
+            Currency::UYU | Currency::B => "centesimo{}",
             Currency::VND => "xu{}",
             _ => cent,
         }
