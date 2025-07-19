@@ -125,10 +125,11 @@ impl French {
         .replace("{}", if plural_form { "s" } else { "" })
     }
 
-    fn cents(&self, _currency: Currency, plural_form: bool) -> String {
-        match _currency {
+    fn cents(&self, currency: Currency, plural_form: bool) -> String {
+        match currency {
             Currency::UAH => String::from("kopeck{}"),
-            _ => _currency.default_subunit_string("centime{}", plural_form),
+            Currency::DOLLAR => String::from("centime{}"),
+            _ => currency.default_subunit_string("centime{}", plural_form),
         }
         .replace("{}", if plural_form { "s" } else { "" })
     }

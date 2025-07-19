@@ -116,12 +116,12 @@ fn test_lang_es() {
     );
     assert_eq!(
         driver(Outputs::Ordinal, BigFloat::from(54_223_231)).unwrap(),
-        "cincuenta y cuatro millonésimo doscientos veintitres milésimo ducentésimo trigésimo \
+        "cincuenta y cuatro millonésimo doscientos veintitrés milésimo ducentésimo trigésimo \
          primero"
     );
     assert_eq!(
         driver(Outputs::Ordinal, BigFloat::from(1_223_231)).unwrap(),
-        "millonésimo doscientos veintitres milésimo ducentésimo trigésimo primero"
+        "millonésimo doscientos veintitrés milésimo ducentésimo trigésimo primero"
     );
 
     let word = to_words(BigFloat::from(14), Outputs::OrdinalNum, &["f"]);
