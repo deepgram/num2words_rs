@@ -45,14 +45,14 @@ const DECENAS: [&str; 10] = [
 const CENTENAS: [&str; 10] = [
     "",
     "ciento",
-    "doscientos",
-    "trescientos",
-    "cuatrocientos",
-    "quinientos",
-    "seiscientos",
-    "setecientos",
-    "ochocientos",
-    "novecientos",
+    "doscient",
+    "trescient",
+    "cuatrocient",
+    "quinient",
+    "seiscient",
+    "setecient",
+    "ochocient",
+    "novecient",
 ];
 // To ensure both arrays doesn't desync
 const MILLAR_SIZE: usize = 22;
@@ -498,11 +498,12 @@ impl Spanish {
             let units = (triplet % 10) as usize;
 
             if hundreds > 0 {
-                match triplet {
+                words.push(match triplet {
                     // Edge case when triplet is a hundred
-                    100 => words.push(String::from("cien")),
-                    _ => words.push(String::from(CENTENAS[hundreds])),
-                }
+                    100 => String::from("cien"),
+                    _ if hundreds == 1 => String::from(CENTENAS[hundreds]),
+                    _ => String::from(CENTENAS[hundreds]) + if self.feminine { "as" } else { "os" },
+                });
             }
 
             if tens != 0 || units != 0 {
@@ -665,7 +666,7 @@ impl Language for Spanish {
     ///     .unwrap();
     /// assert_eq!(
     ///     words,
-    ///     "ciento veintitres mil cuatrocientos cincuenta y seis punto siete ocho nueve negativo"
+    ///     "ciento veintitrés mil cuatrocientos cincuenta y seis punto siete ocho nueve negativo"
     /// );
     /// ```
     fn to_cardinal(&self, num: BigFloat) -> Result<String, Num2Err> {
@@ -910,7 +911,7 @@ impl Language for Spanish {
     fn to_currency(&self, num: BigFloat, currency: crate::Currency) -> Result<String, Num2Err> {
         let strip_uno_into_un_or_una = |string: String, currency_suffix: &str| -> String {
             let has_feminine_currency_suffix =
-                currency_suffix.ends_with('a') || currency_suffix.chars().rev().nth(1) == Some('a');
+                currency_suffix.ends_with('a') || currency_suffix.ends_with("as");
             if let Some(prefix) = string.strip_suffix("iuno") {
                 if has_feminine_currency_suffix {
                     format!("{prefix}iuna")
@@ -927,6 +928,7 @@ impl Language for Spanish {
                 string
             }
         };
+
         if num.is_nan() {
             Err(Num2Err::CannotConvert)
         } else if num.is_inf() {
@@ -1225,7 +1227,7 @@ mod tests {
                                                           * number is correct */
             "seiscientos setenta y seis mil novecientos veintiún vigintillones trescientos doce \
              mil cuarenta y uno novendecillones doscientos catorce mil quinientos sesenta y cinco \
-             octodecillones trescientos veintiseis mil setecientos sesenta y uno septendecillones \
+             octodecillones trescientos veintiséis mil setecientos sesenta y uno septendecillones \
              doscientos setenta y cinco mil cuatrocientos veinticinco sexdecillones quinientos \
              cincuenta y siete mil quinientos cuarenta y cuatro quindeciollones setecientos \
              ochenta y cuatro mil trescientos cuatrodecillones"
