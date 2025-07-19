@@ -519,6 +519,7 @@ impl Spanish {
                             ""
                         }
                     }
+                    (1, _) if self.feminine => "una",
                     _ => UNIDADES[units],
                 };
 
