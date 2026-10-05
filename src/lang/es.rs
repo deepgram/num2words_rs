@@ -1351,7 +1351,7 @@ mod tests {
         let ordinal = |num: i128| es.to_ordinal(to(num)).unwrap();
         assert_eq!(
             ordinal(1_101_001),
-            "millonésima ciento uno milésima primera"
+            "millonésima ciento una milésima primera"
         );
         assert_eq!(
             ordinal(2_001_022),
