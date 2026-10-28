@@ -56,7 +56,7 @@ const CENTENAS: [&str; 10] = [
 ];
 // To ensure both arrays doesn't desync
 const MILLAR_SIZE: usize = 22;
-/// from source: https://es.wikipedia.org/wiki/Anexo:Nombres_de_los_n%C3%BAmeros_en_espa%C3%B1ol
+/// from source: <https://es.wikipedia.org/wiki/Anexo:Nombres_de_los_n%C3%BAmeros_en_espa%C3%B1ol>
 /// The amount of zeros after the unit of a particular milliard, can be calculated through
 /// ((Index of the Milliard) * 2 - 2) * 3  [Is the index to get the milliard. Index 21 gets
 /// vigintillion] `(Index of the Milliard) * 6 - 6`  [If we de-factorize]
